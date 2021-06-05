@@ -1,0 +1,21 @@
+body {
+   background: url('https://blog.enem.com.br/wp-content/uploads/2020/02/img-materia-r7-espaco.jpg');
+}
+
+#button-addon2 {
+   background-color: #00bcd4;
+   color: white;
+}
+
+.none {
+   display: none;
+}
+
+h1 {
+   color: white;
+}
+
+a {
+   text-decoration: none;
+   color: #6c757d;
+}
