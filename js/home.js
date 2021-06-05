@@ -1,4 +1,4 @@
-axios.defaults.baseURL = 'http://localhost:8000';
+axios.defaults.baseURL = 'https://api-scrapbook-andrei.herokuapp.com/';
 
 async function saveScrap(event) {
   event.preventDefault();
