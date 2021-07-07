@@ -1,32 +1,38 @@
-function createAccount(event) {
-   event.preventDefault();
+// axios.defaults.baseURL = 'https://api-scrapbook-andrei.herokuapp.com/';
+axios.defaults.baseURL = 'http://localhost:8080';
 
-   let local = JSON.parse(localStorage.getItem('users'));
+async function createAccount(event) {
+  event.preventDefault();
 
-   if (local == null) {
-      local = [];
-   }
+  const email = document.getElementById('email');
+  const password = document.getElementById('password');
+  const repeatPassword = document.getElementById('repeat-password');
 
-   const user = document.getElementById('user');
-   const pass = document.getElementById('pass');
-   const repeatPass = document.getElementById('repeat-pass');
+  if (password.value !== repeatPassword.value) {
+    alert('As senhas devem ser iguais');
+    return;
+  }
 
-   if (pass.value !== repeatPass.value) {
-      alert('As senhas devem ser iguais');
-      return;
-   }
+  const profile = {
+    email: email.value,
+    password: password.value,
+  }
 
-   const profile = {
-      user: user.value,
-      password: pass.value,
-   }
+  try {
+    const response = await axios.post('/users', profile);
+    alert(response.data.message)
+  } catch (error) {
+    switch (error.response.status) {
+      case 400:
+        alert(error.response.data.message);
+        break;
+      default:
+        alert('Erro interno do servidor');
+        break;
+    }
+  }
 
-   local.push(profile);
-
-   // let users = localStorage.getItem('users');
-   localStorage.setItem('users', JSON.stringify(local));
-
-   user.value = '';
-   pass.value = '';
-   repeatPass.value = '';
+  email.value = '';
+  password.value = '';
+  repeatPassword.value = '';
 }

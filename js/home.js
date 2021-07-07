@@ -1,7 +1,9 @@
-axios.defaults.baseURL = 'https://api-scrapbook-andrei.herokuapp.com/';
+// axios.defaults.baseURL = 'https://api-scrapbook-andrei.herokuapp.com/';
+axios.defaults.baseURL = 'http://localhost:8080';
 
 async function saveScrap(event) {
   event.preventDefault();
+  const userUid = localStorage.getItem('userUid');
 
   const inputId = document.getElementById('ipt-id');
   const inputDesc = document.getElementById('ipt-desc');
@@ -19,6 +21,7 @@ async function saveScrap(event) {
   const data = {
     description: inputDesc.value,
     details: inputDetail.value,
+    userUid,
   }
 
   let response;
@@ -67,7 +70,9 @@ function setEditScrap(event) {
 async function initTable() {
   const tbody = document.getElementsByTagName('tbody')[0];
 
-  const response = await axios.get('/notes');
+  const userUid = localStorage.getItem('userUid');
+
+  const response = await axios.get(`/notes?userUid=${userUid}`);
   const dados = response.data.data;
 
   tbody.innerHTML = '';
@@ -77,7 +82,7 @@ async function initTable() {
       const tr = document.createElement('tr');
       tr.innerHTML = `
          <tr class="table-light">
-            <th scope="row">${item.id}</th>
+            <th scope="row">${item.uid}</th>
             <td>${item.description}</td>
             <td>${item.details}</td>
             <td>

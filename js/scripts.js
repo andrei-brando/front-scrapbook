@@ -1,21 +1,27 @@
-function login(event) {
-   const user = document.getElementById('user');
-   const pass = document.getElementById('pass');
+// axios.defaults.baseURL = 'https://api-scrapbook-andrei.herokuapp.com/';
+axios.defaults.baseURL = 'http://localhost:8080';
 
-   const local = JSON.parse(localStorage.getItem('users'));
+async function login(event) {
+  event.preventDefault();
+  const email = document.getElementById('email').value;
+  const password = document.getElementById('password').value;
 
-   if (local == null) {
-      alert('Usuário não cadastrado!');
-      return;
-   }
+  try {
+    const response = await axios.post(`/login/${email}`, { password });
+    localStorage.setItem('userUid', response.data.data.uid);
+    
+    alert(response.data.message);
 
-   for (const profile of local) {
-      if (user.value === profile.user && pass.value === profile.password) {
-         window.location.href = '/home.html';
-         return;
-      } else {
-         alert('Email ou senha inválidas');
-         return;
-      }
-   }
+    window.location.href = '/home.html';
+  } catch (error) {
+    console.log(error.response.data.message);
+    switch (error.response.status) {
+      case 400:
+        alert(error.response.data.message);
+        break;
+      default:
+        alert('Erro interno do servidor');
+        break;
+    }
+  }
 }
