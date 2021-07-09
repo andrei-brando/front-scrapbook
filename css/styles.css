@@ -8,12 +8,16 @@ body, html {
    background: url('https://blog.enem.com.br/wp-content/uploads/2020/02/img-materia-r7-espaco.jpg');
 }
 
+.none {
+  display: none;
+}
+
 .container {
    display: flex;
    justify-content: center;
    align-items: center;
    height: 100%;
-   
+   flex-direction: column;
 }
 
 .card {

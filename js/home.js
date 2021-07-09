@@ -1,5 +1,4 @@
-// axios.defaults.baseURL = 'https://api-scrapbook-andrei.herokuapp.com/';
-axios.defaults.baseURL = 'http://localhost:8080';
+axios.defaults.baseURL = 'https://api-scrapbook-andrei.herokuapp.com/';
 
 async function saveScrap(event) {
   event.preventDefault();
@@ -95,6 +94,11 @@ async function initTable() {
       tbody.appendChild(tr);
     });
   }
+}
+
+function signOut() {
+  localStorage.removeItem('userUid');
+  window.location.href = '/index.html';
 }
 
 initTable();

@@ -1,5 +1,4 @@
-// axios.defaults.baseURL = 'https://api-scrapbook-andrei.herokuapp.com/';
-axios.defaults.baseURL = 'http://localhost:8080';
+axios.defaults.baseURL = 'https://api-scrapbook-andrei.herokuapp.com/';
 
 async function createAccount(event) {
   event.preventDefault();
@@ -9,7 +8,11 @@ async function createAccount(event) {
   const repeatPassword = document.getElementById('repeat-password');
 
   if (password.value !== repeatPassword.value) {
-    alert('As senhas devem ser iguais');
+    document.getElementById('scrap-error').innerHTML = 'As senhas devem ser iguais';
+    document.getElementById('scrap-error').classList.remove('none');
+    setTimeout(() => {
+      document.getElementById('scrap-error').classList.add('none');
+    }, 2000);
     return;
   }
 
@@ -20,16 +23,18 @@ async function createAccount(event) {
 
   try {
     const response = await axios.post('/users', profile);
-    alert(response.data.message)
+
+    document.getElementById('scrap-sucess').innerHTML = response.data.message
+    document.getElementById('scrap-sucess').classList.remove('none');
+    setTimeout(() => {
+      document.getElementById('scrap-sucess').classList.add('none');
+    }, 2000);
   } catch (error) {
-    switch (error.response.status) {
-      case 400:
-        alert(error.response.data.message);
-        break;
-      default:
-        alert('Erro interno do servidor');
-        break;
-    }
+    document.getElementById('scrap-error').innerHTML = error.response.data.message
+    document.getElementById('scrap-error').classList.remove('none');
+    setTimeout(() => {
+      document.getElementById('scrap-error').classList.add('none');
+    }, 2000);
   }
 
   email.value = '';

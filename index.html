@@ -1,33 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-   <meta charset="UTF-8">
-   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <link rel="stylesheet" href="./css/bootstrap/bootstrap.min.css">
-   <link rel="stylesheet" href="./css/styles.css">
-   <title>Login</title>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="./css/bootstrap/bootstrap.min.css">
+  <link rel="stylesheet" href="./css/styles.css">
+  <title>Login</title>
 </head>
+
 <body>
-   <div class="container">
-      <div class="card">
-         <div class="left">
-            <h4>ENTRAR NO SISTEMA DE RECADOS</h4>
-            <form>
-               <input type="text" name="email" id="email" placeholder="email">
-               <input type="password" name="password" id="password" placeholder="password">
-            </form>
-            <div class="buttons">
-               <button onclick="login(event)">LOGIN</button>
-               <a href="create_account.html">CRIAR CONTA</a>
-            </div>
-         </div>
-         <div class="right">
-            <img src="https://cdn-0.imagensemoldes.com.br/wp-content/uploads/2020/08/Foguete-Astronauta-PNG.png" alt="astronauta">
-         </div>
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <div class="alert alert-danger none" id="scrap-error" role="alert">
+        </div>
       </div>
-   </div>
-   <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
-   <script src="./js/scripts.js"></script>
+    </div>
+
+    <div class="row">
+      <div class="col-12">
+        <div class="alert alert-success none" id="scrap-sucess" role="alert">
+        </div>
+      </div>
+    </div>
+    
+    <div class="card">
+      <div class="left">
+        <h4>ENTRAR NO SISTEMA DE RECADOS</h4>
+        <form>
+          <input type="text" name="email" id="email" placeholder="email">
+          <input type="password" name="password" id="password" placeholder="password">
+        </form>
+        <div class="buttons">
+          <button onclick="login(event)">LOGIN</button>
+          <a href="create_account.html">CRIAR CONTA</a>
+        </div>
+      </div>
+      <div class="right">
+        <img src="https://cdn-0.imagensemoldes.com.br/wp-content/uploads/2020/08/Foguete-Astronauta-PNG.png"
+          alt="astronauta">
+      </div>
+    </div>
+  </div>
+  <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+  <script src="./js/scripts.js"></script>
 </body>
+
 </html>
