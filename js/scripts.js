@@ -1,4 +1,4 @@
-axios.defaults.baseURL = 'https://api-scrapbook-andrei.herokuapp.com/';
+axios.defaults.baseURL = 'https://api-scrap-andrei.herokuapp.com';
 
 async function login(event) {
   event.preventDefault();

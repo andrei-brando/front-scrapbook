@@ -1,4 +1,4 @@
-axios.defaults.baseURL = 'https://api-scrapbook-andrei.herokuapp.com/';
+axios.defaults.baseURL = 'https://api-scrap-andrei.herokuapp.com';
 
 async function saveScrap(event) {
   event.preventDefault();
@@ -46,7 +46,7 @@ async function saveScrap(event) {
 
 async function deleteScrap(event) {
   event.preventDefault();
- 
+
   const idScrap = event.target.parentNode.parentNode.children[0].innerText;
 
   const response = await axios.delete(`/notes/${idScrap}`);
