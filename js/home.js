@@ -1,4 +1,5 @@
-axios.defaults.baseURL = 'https://api-scrap-andrei.herokuapp.com';
+// axios.defaults.baseURL = 'https://api-scrap-andrei.herokuapp.com/api';
+axios.defaults.baseURL = 'http://localhost:8080/api';
 
 async function saveScrap(event) {
   event.preventDefault();
@@ -17,18 +18,18 @@ async function saveScrap(event) {
     return;
   }
 
-  const data = {
+  const body = {
     description: inputDesc.value,
     details: inputDetail.value,
     userUid,
   }
 
-  let response;
+  let response = null;
 
   if (!inputId.value) {
-    response = await axios.post('/notes', data);
+    response = await axios.post('/notes', body);
   } else {
-    response = await axios.put(`/notes/${inputId.value}`, data);
+    response = await axios.put(`/notes/${inputId.value}`, body);
   }
 
   if (response.status == 200) {
@@ -49,7 +50,7 @@ async function deleteScrap(event) {
 
   const idScrap = event.target.parentNode.parentNode.children[0].innerText;
 
-  const response = await axios.delete(`/notes/${idScrap}`);
+  await axios.delete(`/notes/${idScrap}`);
 
   initTable();
 }
@@ -71,13 +72,12 @@ async function initTable() {
 
   const userUid = localStorage.getItem('userUid');
 
-  const response = await axios.get(`/notes?userUid=${userUid}`);
-  const dados = response.data.data;
+  const { data } = await axios.get(`/notes/${userUid}`);
 
   tbody.innerHTML = '';
 
-  if (dados) {
-    dados.forEach((item) => {
+  if (data) {
+    data.forEach((item) => {
       const tr = document.createElement('tr');
       tr.innerHTML = `
          <tr class="table-light">
