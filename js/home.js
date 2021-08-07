@@ -51,8 +51,15 @@ async function deleteScrap(event) {
   const idScrap = event.target.parentNode.parentNode.children[0].innerText;
 
   await axios.delete(`/notes/${idScrap}`);
-
   initTable();
+
+  document.getElementById('scrap-sucess').innerHTML = 'Recado deletado';
+  document.getElementById('scrap-sucess').classList.remove('none');
+  setTimeout(() => {
+    document.getElementById('scrap-sucess').classList.add('none');
+  }, 2000);
+
+
 }
 
 function setEditScrap(event) {
@@ -67,19 +74,27 @@ function setEditScrap(event) {
   inputDetail.value = event.target.parentNode.parentNode.children[2].innerText;
 }
 
+function clearTable() {
+  const tbody = document.getElementsByTagName('tbody')[0];
+  tbody.innerHTML = '';
+}
+
 async function initTable() {
   const tbody = document.getElementsByTagName('tbody')[0];
 
   const userUid = localStorage.getItem('userUid');
 
-  const { data } = await axios.get(`/notes/${userUid}`);
-
   tbody.innerHTML = '';
 
-  if (data) {
-    data.forEach((item) => {
-      const tr = document.createElement('tr');
-      tr.innerHTML = `
+  try {
+    const { data } = await axios.get(`/notes/all/${userUid}`);
+
+    tbody.innerHTML = '';
+
+    if (data) {
+      data.forEach((item) => {
+        const tr = document.createElement('tr');
+        tr.innerHTML = `
          <tr class="table-light">
             <th scope="row">${item.uid}</th>
             <td>${item.description}</td>
@@ -91,8 +106,11 @@ async function initTable() {
          </tr>
          `;
 
-      tbody.appendChild(tr);
-    });
+        tbody.appendChild(tr);
+      });
+    }
+  } catch (error) {
+    tbody.innerHTML = '';
   }
 }
 
