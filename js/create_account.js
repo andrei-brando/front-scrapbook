@@ -1,5 +1,4 @@
-// axios.defaults.baseURL = 'https://api-scrap-andrei.herokuapp.com/api';
-axios.defaults.baseURL = 'http://localhost:8080/api';
+axios.defaults.baseURL = 'https://api-scrap-andrei.herokuapp.com/api';
 
 async function createAccount(event) {
   event.preventDefault();
