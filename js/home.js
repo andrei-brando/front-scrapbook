@@ -1,4 +1,5 @@
-axios.defaults.baseURL = 'https://api-scrap-andrei.herokuapp.com/api';
+// axios.defaults.baseURL = 'https://api-scrap-andrei.herokuapp.com/api';
+axios.defaults.baseURL = 'http://localhost:8080/api';
 
 async function saveScrap(event) {
   event.preventDefault();
@@ -50,12 +51,12 @@ async function deleteScrap(event) {
   const idScrap = event.target.parentNode.parentNode.children[0].innerText;
 
   await axios.delete(`/notes/${idScrap}`);
-  initTable();
 
   document.getElementById('scrap-sucess').innerHTML = 'Recado deletado';
   document.getElementById('scrap-sucess').classList.remove('none');
   setTimeout(() => {
     document.getElementById('scrap-sucess').classList.add('none');
+    initTable();
   }, 2000);
 
 
@@ -85,31 +86,25 @@ async function initTable() {
 
   tbody.innerHTML = '';
 
-  try {
-    const { data } = await axios.get(`/notes/all/${userUid}`);
+  const { data } = await axios.get(`/notes/all/${userUid}`);
 
-    tbody.innerHTML = '';
+  if (data) {
+    data.forEach((item) => {
+      const tr = document.createElement('tr');
+      tr.innerHTML = `
+       <tr class="table-light">
+          <th scope="row">${item.uid}</th>
+          <td>${item.description}</td>
+          <td>${item.details}</td>
+          <td>
+          <button type="button" class="btn btn-danger" onclick="deleteScrap(event)">Apagar</button>
+          <button type="button" class="btn btn-success" onclick="setEditScrap(event)">Editar</button>
+          </td>
+       </tr>
+       `;
 
-    if (data) {
-      data.forEach((item) => {
-        const tr = document.createElement('tr');
-        tr.innerHTML = `
-         <tr class="table-light">
-            <th scope="row">${item.uid}</th>
-            <td>${item.description}</td>
-            <td>${item.details}</td>
-            <td>
-            <button type="button" class="btn btn-danger" onclick="deleteScrap(event)">Apagar</button>
-            <button type="button" class="btn btn-success" onclick="setEditScrap(event)">Editar</button>
-            </td>
-         </tr>
-         `;
-
-        tbody.appendChild(tr);
-      });
-    }
-  } catch (error) {
-    tbody.innerHTML = '';
+      tbody.appendChild(tr);
+    });
   }
 }
 
